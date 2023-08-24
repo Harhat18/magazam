@@ -1,9 +1,10 @@
-import {View, Text, SafeAreaView} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
 import React from 'react';
 import styles from './Login.style';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import LottieView from 'lottie-react-native';
+import {Formik} from 'formik';
 
 const Login = () => {
   return (
@@ -18,11 +19,25 @@ const Login = () => {
           />
         </View>
       </View>
-      <View style={styles.body_container}>
-        <Input placeholder="Kullanıcı Adınızı Giriniz" />
-        <Input placeholder="Şifrenizi Giriniz" />
-        <Button text="Giriş Yap" />
-      </View>
+      <Formik
+        initialValues={{username: '', password: ''}}
+        onSubmit={formValues => console.log(formValues)}>
+        {formik => (
+          <View style={styles.body_container}>
+            <Input
+              placeholder="Kullanıcı Adınızı Giriniz"
+              value={formik.values.username}
+              onType={formik.handleChange('username')}
+            />
+            <Input
+              placeholder="Şifrenizi Giriniz"
+              value={formik.values.password}
+              onType={formik.handleChange('password')}
+            />
+            <Button text="Giriş Yap" onPress={formik.handleSubmit} />
+          </View>
+        )}
+      </Formik>
     </SafeAreaView>
   );
 };

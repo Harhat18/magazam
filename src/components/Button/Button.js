@@ -1,10 +1,10 @@
-import {View, Pressable, Text} from 'react-native';
+import {Pressable, Text} from 'react-native';
 import React from 'react';
 import styles from './Button.style';
 
-const Button = ({text}) => {
+const Button = ({text, onPress}) => {
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <Text style={styles.title}>{text}</Text>
     </Pressable>
   );

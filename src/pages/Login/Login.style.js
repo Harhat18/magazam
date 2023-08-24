@@ -15,7 +15,7 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   animation: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
   },
 });
