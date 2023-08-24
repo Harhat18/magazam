@@ -12,8 +12,27 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ProductsPage" component={Products} />
-        <Stack.Screen name="DetailPage" component={Detail} />
+        <Stack.Screen
+          name="ProductsPage"
+          component={Products}
+          options={{
+            title: 'Mağazam',
+            headerStyle: {backgroundColor: '#2f4f4f'},
+            headerTitleStyle: {color: '#fff', fontSize: 20},
+            headerTitleAlign: 'center',
+          }}
+        />
+        <Stack.Screen
+          name="DetailPage"
+          component={Detail}
+          options={{
+            title: 'Ürün Detay',
+            headerStyle: {backgroundColor: '#2f4f4f'},
+            headerTitleStyle: {color: '#fff', fontSize: 20},
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

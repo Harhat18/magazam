@@ -1,16 +1,18 @@
 import React from 'react';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image, Pressable} from 'react-native';
 import styles from './ProductsCard.style';
 
-const ProductCard = ({product}) => {
+const ProductCard = ({product, onSelect}) => {
   return (
-    <View style={styles.container}>
-      <Image style={styles.image} source={{uri: product.image}} />
-      <View style={styles.body_container}>
-        <Text style={styles.title}>{product.title} </Text>
-        <Text style={styles.price}>{product.price} TL </Text>
+    <Pressable onPress={onSelect}>
+      <View style={styles.container}>
+        <Image style={styles.image} source={{uri: product.image}} />
+        <View style={styles.body_container}>
+          <Text style={styles.title}>{product.title} </Text>
+          <Text style={styles.price}>{product.price} TL </Text>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

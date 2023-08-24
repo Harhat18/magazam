@@ -1,27 +1,34 @@
 import React from 'react';
-import {SafeAreaView, FlatList, ActivityIndicator, Text} from 'react-native';
+import {SafeAreaView, FlatList} from 'react-native';
 import {API_URL} from '@env';
 import ProductCard from '../../components/ProductCard/ProductsCard';
 import useFetch from '../../hooks/useFetch/useFetch';
 import Loading from '../../components/Loading';
+import Error from '../../components/Error/Error';
 
-const Products = () => {
+const Products = ({navigation}) => {
   const {data, loading, error} = useFetch(API_URL);
 
-  const renderProduct = ({item}) => <ProductCard product={item} />;
-  return <Loading />;
-  // if (error) {
-  //   return <Text>Bir Hata Oluştu : {error}</Text>;
-  // }
+  const handleProductselect = id => {
+    navigation.navigate('DetailPage', {id});
+  };
 
-  // if (loading) {
-  //   return <Loading />;
-  // }
-  // return (
-  //   <SafeAreaView>
-  //     <FlatList data={data} renderItem={renderProduct} />
-  //   </SafeAreaView>
-  // );
+  const renderProduct = ({item}) => (
+    <ProductCard product={item} onSelect={() => handleProductselect(item.id)} />
+  );
+
+  if (error) {
+    return <Error />;
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
+  return (
+    <SafeAreaView>
+      <FlatList data={data} renderItem={renderProduct} />
+    </SafeAreaView>
+  );
 };
 
 export default Products;
