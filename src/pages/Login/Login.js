@@ -1,14 +1,29 @@
-import {View, SafeAreaView} from 'react-native';
+import {View, SafeAreaView, Alert} from 'react-native';
+import {API_AUTH_URL} from '@env';
 import React from 'react';
 import styles from './Login.style';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import LottieView from 'lottie-react-native';
 import {Formik} from 'formik';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-const Login = () => {
+
+import usePost from '../../hooks/usePost/usePost';
+
+const Login = ({navigation}) => {
+  const {data, error, loading, post} = usePost();
+
   function handleLogin(values) {
-    console.log(values);
+    post(API_AUTH_URL, values);
+  }
+  if (error) {
+    Alert.alert('Shopping', 'Bir hata oluştu');
+  }
+  if (data) {
+    if (data.status === 'Error') {
+      Alert.alert('Shopping', 'Kullanıcı Bulunamadı');
+    } else {
+      navigation.navigate('ProductsPage');
+    }
   }
 
   return (
@@ -26,20 +41,23 @@ const Login = () => {
       <Formik
         initialValues={{username: '', password: ''}}
         onSubmit={handleLogin}>
-        {({values, handleChange, handleSubmit}) => (
+        {({handleChange, handleSubmit, values}) => (
           <View style={styles.body_container}>
             <Input
               placeholder="Kullanıcı Adınızı Giriniz"
               value={values.username}
               onType={handleChange('username')}
+              iconName="account"
             />
 
             <Input
               placeholder="Şifrenizi Giriniz"
               value={values.password}
               onType={handleChange('password')}
+              iconName="key"
+              isSecure
             />
-            <Button text="Giriş Yap" onPress={handleSubmit} />
+            <Button text="Giriş yap" onPress={handleSubmit} loading={loading} />
           </View>
         )}
       </Formik>
